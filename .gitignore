@@ -1,0 +1,4 @@
+venv
+biblioteca/__pycache__
+libreria/__pycache__
+libreria/migrations/__pycache__
