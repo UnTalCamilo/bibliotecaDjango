@@ -1,13 +1,13 @@
 {% extends 'libreria/base.html' %}
 
+{% load static %}
 {% block title %}Libros{% endblock title %}
 
 {% block content %}
 
 <div class="card">
-    <div class="card-header">Listar libros</div>
     <div class="card-body">
-        <h4 class="card-title">LIbros</h4>
+        <h4 class="card-title">Libros</h4>
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
@@ -34,7 +34,8 @@
                     <tr>
                         <td>{{ libro.id }}</td>
                         <td>{{ libro.titulo }}</td>
-                        <td><img src="{{ libro.imagen }}" alt="{{libro.imagen}}" width="100px"></td>
+                        <td>{% static 'media/' %}</td>
+                        <td><img src="{% static 'media/' %}{{ libro.imagen }}" alt="" width="100px"></td>
                         <td>{{ libro.descripcion }}</td>
                         <td>
                             <button  class="btn btn-primary" >Editar</button>
@@ -46,10 +47,8 @@
             </table>
         </div>
     </div>
+    
     <div class="response">
-        
-    </div>
-    <div class="card-footer text-muted">
         
     </div>
 </div>
