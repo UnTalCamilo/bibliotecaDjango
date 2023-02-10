@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic import TemplateView
 from .forms import *
+import os
+from biblioteca.settings import MEDIA_ROOT
 # Create your views here.
 
 
@@ -24,11 +26,18 @@ class InicioView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['libros'] = Libro.objects.values()
-        print("context: ", context)
         return context
 
-    def deleteBook():
-        pass
+    def delete(request):
+        id = request.POST.get('id')
+        try :
+            book = Libro.objects.filter(id=id)
+            os.remove(MEDIA_ROOT + '/' + str(book[0].imagen))
+            book.delete()
+            return render(request, 'libreria/index.html', {'libros': Libro.objects.values()})
+        except:
+            return render(request, 'libreria/index.html', {'libros': Libro.objects.values()})
+            
 
 
 class NosotrosView(TemplateView):
@@ -51,8 +60,8 @@ class CrearView(TemplateView):
     def post(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
         form = LibroForm(request.POST, request.FILES)
+        
         if form.is_valid():
-            print("form: ", form)
             form.save()
             context['form'] = LibroForm() 
         else:
