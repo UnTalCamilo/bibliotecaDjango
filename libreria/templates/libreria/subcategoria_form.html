@@ -2,7 +2,7 @@
   <div class="modal-content">
     <div class="modal-body">
       {% if libro %}
-        <form role="form" method="post" action="{% url 'edit' libro.id %}">
+        <form role="form" method="post" action="{% url 'edit' libro.id %}" enctype="multipart/form-data">
           <label class="form-label" for="">{{ libro.id }}</label>
           <div class="mb-3">
             <label class="form-label" for="title">Titulo</label>
@@ -31,7 +31,7 @@
                    value="{{ libro.imagen }}"/>
           </div>
         {% else %}
-          <form role="form" action="{% url 'new' %}" method="post">
+          <form role="form" action="{% url 'new' %}" method="post" enctype="multipart/form-data">
             <div class="mb-3">
               <label class="form-label" for="title">Titulo</label>
               <input type="text" class="form-control" id="title" name="titulo"/>
