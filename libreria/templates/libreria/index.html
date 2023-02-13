@@ -23,7 +23,7 @@
                     </thead>
                     <tbody>
                         {% for libro in libros %}
-                        {% csrf_token %}
+                            {% csrf_token %}
                             <tr>
                                 <td>{{ libro.id }}</td>
                                 <td>{{ libro.titulo }}</td>
@@ -32,11 +32,18 @@
                                 </td>
                                 <td>{{ libro.descripcion }}</td>
                                 <td>
-                                    <button class="btn btn-primary">Editar</button>
+                                    <button class="btn btn-primary"
+                                            onclick="return openModal('{% url 'edit' libro.id %}')">
+                                        Editar
+                                    </button>
                                     <button class="btn btn-danger"
                                             onclick="deleteBook('{{ libro.id }}' , '{% url 'delete' %}', '{{ csrf_token }}')">
                                         Eliminar
                                     </button>
+                                    {% comment %} <a class="btn btn-danger"
+                                            href='{% url 'delete' libro.id %}'>
+                                        Eliminar
+                                    </a> {% endcomment %}
                                 </td>
                             </tr>
                         {% endfor %}
@@ -46,4 +53,12 @@
         </div>
         <div class="response"></div>
     </div>
+    <!-- Button trigger modal -->
+    <button type="button"
+            class="btn btn-primary"
+            onclick="return openModal('{% url 'new' %}')">
+        Agregar
+    </button>
+    
+    
 {% endblock content %}

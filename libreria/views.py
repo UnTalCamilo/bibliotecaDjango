@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse
-from django.views.generic import TemplateView
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView
+from django.views.generic.edit import FormView
 from .forms import *
 import os
 from biblioteca.settings import MEDIA_ROOT
@@ -67,3 +69,43 @@ class CrearView(TemplateView):
         else:
             context['form'] = form
         return self.render_to_response(context)
+
+
+class eliminarView(DeleteView):
+    template_name = 'libreria/index.html'
+
+    model = Libro
+
+    context_object_name = 'libro'
+
+    success_url = reverse_lazy('inicio')
+
+
+
+
+class subCategoriaNew(CreateView):
+    template_name = 'libreria/subcategoria_form.html'
+
+    model = Libro
+
+    context_object_name = 'libro'
+
+    form_class = LibroForm
+
+    success_url = reverse_lazy('inicio')
+
+    
+
+class subCategoriaEdit(UpdateView):
+    template_name = 'libreria/subcategoria_form.html'
+
+    model = Libro
+
+    context_object_name = 'libro'
+
+    form_class = LibroForm
+
+    success_url = reverse_lazy('inicio')
+
+
+

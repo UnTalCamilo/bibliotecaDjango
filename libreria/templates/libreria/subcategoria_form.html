@@ -1,0 +1,64 @@
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-body">
+      {% if libro %}
+        <form role="form" method="post" action="{% url 'edit' libro.id %}">
+          <label class="form-label" for="">{{ libro.id }}</label>
+          <div class="mb-3">
+            <label class="form-label" for="title">Titulo</label>
+            <input type="text"
+                   class="form-control"
+                   id="title"
+                   name="titulo"
+                   value="{{ libro.titulo }}"/>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label" for="about">Descripción</label>
+            <input name="descripcion"
+                   type="text"
+                   class="form-control"
+                   id="about"
+                   value="{{ libro.descripcion }}"/>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label" for="image">Imagen</label>
+            <input type="file"
+                   class="form-control form-control-sm"
+                   id="image"
+                   name="imagen"
+                   value="{{ libro.imagen }}"/>
+          </div>
+        {% else %}
+          <form role="form" action="{% url 'new' %}" method="post">
+            <div class="mb-3">
+              <label class="form-label" for="title">Titulo</label>
+              <input type="text" class="form-control" id="title" name="titulo"/>
+            </div>
+            
+            <div class="mb-3">
+              <label class="form-label" for="about">Descripción</label>
+              <input name="descripcion" type="text" class="form-control" id="about"/>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="image">Imagen</label>
+              <input type="file" class="form-control form-control-sm" id="image" name="imagen"/>
+            </div>
+          {% endif %}
+          {% csrf_token %}
+          <!-- /.panel-heading -->
+          <div class="panel-body">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">
+              <span class="fa fa-save"></span> Guardar
+            </button>
+            <a class="btn btn-success"  onclick="return closeModal()"><span class="fa fa-undo"></span> Cancelar</a>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->

@@ -1,4 +1,6 @@
+
 function deleteBook(id, url, token){
+    console.log(url)
     let data = new FormData();
     data.append('id', id);
     $.ajax({
@@ -12,7 +14,7 @@ function deleteBook(id, url, token){
             'id': id
         },
         beforeSend: function(){
-            $("#response").html("<img src='images/1488.gif' alt='Waiting...'>");
+            $("#response").html("<img src=\"{% static 'media/icons/1488.gif' %}\" alt='Waiting...'  width='30px'>");
         },
         success: function(datos){
             console.log(datos)
@@ -23,4 +25,23 @@ function deleteBook(id, url, token){
         }
     });
 
+}
+
+
+function openModal(url){
+    console.log(url)
+    $('#modal').load (url, function(){
+       $(this).modal({
+            backdrop: 'static',
+            keyboard: false
+       });
+       $(this).modal('show');
+
+       return false;
+    });
+}
+
+function closeModal(){
+    $('#modal').modal('hide');
+    return false;
 }
