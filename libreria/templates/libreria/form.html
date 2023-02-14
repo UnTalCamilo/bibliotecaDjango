@@ -2,7 +2,10 @@
   <div class="modal-content">
     <div class="modal-body">
       {% if libro %}
-        <form role="form" method="post" action="{% url 'edit' libro.id %}" enctype="multipart/form-data">
+        <form role="form"
+              method="post"
+              action="{% url 'edit' libro.id %}"
+              enctype="multipart/form-data">
           <label class="form-label" for="">{{ libro.id }}</label>
           <div class="mb-3">
             <label class="form-label" for="title">Titulo</label>
@@ -12,7 +15,6 @@
                    name="titulo"
                    value="{{ libro.titulo }}"/>
           </div>
-          
           <div class="mb-3">
             <label class="form-label" for="about">Descripción</label>
             <input name="descripcion"
@@ -21,7 +23,6 @@
                    id="about"
                    value="{{ libro.descripcion }}"/>
           </div>
-
           <div class="mb-3">
             <label class="form-label" for="image">Imagen</label>
             <input type="file"
@@ -31,23 +32,29 @@
                    value="{{ libro.imagen }}"/>
           </div>
         {% else %}
-          <form role="form" action="{% url 'new' %}" method="post" enctype="multipart/form-data">
+          <form role="form"
+                action="{% url 'new' %}"
+                method="post"
+                enctype="multipart/form-data">
             <div class="mb-3">
               <label class="form-label" for="title">Titulo</label>
               <input type="text" class="form-control" id="title" name="titulo"/>
             </div>
-            
             <div class="mb-3">
               <label class="form-label" for="about">Descripción</label>
               <input name="descripcion" type="text" class="form-control" id="about"/>
             </div>
-
             <div class="mb-3">
               <label class="form-label" for="image">Imagen</label>
-              <input type="file" class="form-control form-control-sm" id="image" name="imagen"/>
+              <input type="file"
+                     class="form-control form-control-sm"
+                     id="image"
+                     name="imagen"/>
             </div>
           {% endif %}
           {% csrf_token %}
+          {{ form.errors }}
+          {{ form.non_field_errors }}
           <!-- /.panel-heading -->
           <div class="panel-body">
             {% csrf_token %}

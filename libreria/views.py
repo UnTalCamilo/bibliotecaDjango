@@ -6,6 +6,7 @@ from django.views.generic.edit import FormView
 from .forms import *
 import os
 from biblioteca.settings import MEDIA_ROOT
+from django.core.paginator import Paginator
 # Create your views here.
 
 
@@ -22,23 +23,12 @@ from biblioteca.settings import MEDIA_ROOT
 # def crear(request):
 #     return render(request, 'libreria/crear.html')
 
-class InicioView(TemplateView):
+class InicioView(ListView):
     template_name = 'libreria/index.html'
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['libros'] = Libro.objects.values()
-        return context
 
-    def delete(request):
-        id = request.POST.get('id')
-        try :
-            book = Libro.objects.filter(id=id)
-            os.remove(MEDIA_ROOT + '/' + str(book[0].imagen))
-            book.delete()
-            return render(request, 'libreria/index.html', {'libros': Libro.objects.values()})
-        except:
-            return render(request, 'libreria/index.html', {'libros': Libro.objects.values()})
+    paginate_by = 2
+
+    model = Libro
             
 
 
@@ -48,27 +38,6 @@ class NosotrosView(TemplateView):
 class LibrosView(TemplateView):
     template_name = 'libreria/libros.html'
 
-class CrearView(TemplateView):
-    template_name = 'libreria/crear.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['titulo'] = 'Titulo del libro'
-        context['imagen'] = 'imagen del libro'
-        context['descripcion'] = 'descripcion del libro'
-        print("context: ", context)
-        return context
-        
-    def post(self, request, *args, **kwargs):
-        context = self.get_context_data(**kwargs)
-        form = LibroForm(request.POST, request.FILES)
-        
-        if form.is_valid():
-            form.save()
-            context['form'] = LibroForm() 
-        else:
-            context['form'] = form
-        return self.render_to_response(context)
 
 
 class eliminarView(DeleteView):
@@ -84,7 +53,7 @@ class eliminarView(DeleteView):
 
 
 class subCategoriaNew(CreateView):
-    template_name = 'libreria/subcategoria_form.html'
+    template_name = 'libreria/form.html'
 
     model = Libro
 
@@ -97,7 +66,7 @@ class subCategoriaNew(CreateView):
     
 
 class subCategoriaEdit(UpdateView):
-    template_name = 'libreria/subcategoria_form.html'
+    template_name = 'libreria/form.html'
 
     model = Libro
 

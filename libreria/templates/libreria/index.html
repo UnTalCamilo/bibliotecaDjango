@@ -22,7 +22,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for libro in libros %}
+                        {% for libro in page_obj %}
                             {% csrf_token %}
                             <tr>
                                 <td>{{ libro.id }}</td>
@@ -33,32 +33,45 @@
                                 <td>{{ libro.descripcion }}</td>
                                 <td>
                                     <button class="btn btn-primary"
-                                            onclick="return openModal('{% url 'edit' libro.id %}')">
-                                        Editar
-                                    </button>
-                                    <button class="btn btn-danger"
-                                            onclick="deleteBook('{{ libro.id }}' , '{% url 'delete' %}', '{{ csrf_token }}')">
+                                            onclick="return openModal('{% url 'edit' libro.id %}')">Editar</button>
+                                    {% comment %} <button class="btn btn-danger" onclick="deleteBook('{{ libro.id }}' , '{% url 'delete' %}', '{{ csrf_token }}')">
                                         Eliminar
-                                    </button>
-                                    {% comment %} <a class="btn btn-danger"
-                                            href='{% url 'delete' libro.id %}'>
-                                        Eliminar
-                                    </a> {% endcomment %}
+                                    </button> {% endcomment %}
+                                    {% comment %} <a class="btn btn-danger" href='{% url 'delete' libro.id %}'>Eliminar</a> {% endcomment %}
                                 </td>
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page=1" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% for i in page_obj.paginator.page_range %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                        </li>
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
         </div>
         <div class="response"></div>
     </div>
     <!-- Button trigger modal -->
     <button type="button"
             class="btn btn-primary"
-            onclick="return openModal('{% url 'new' %}')">
-        Agregar
-    </button>
-    
-    
+            onclick="return openModal('{% url 'new' %}')">Agregar</button>
 {% endblock content %}
