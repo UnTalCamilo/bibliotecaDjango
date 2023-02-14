@@ -17,11 +17,14 @@
           </div>
           <div class="mb-3">
             <label class="form-label" for="about">Descripción</label>
-            <input name="descripcion"
+            <textarea 
+                   name="descripcion"
                    type="text"
                    class="form-control"
                    id="about"
-                   value="{{ libro.descripcion }}"/>
+                   rows="3">
+                   {{ libro.descripcion }}
+            </textarea>
           </div>
           <div class="mb-3">
             <label class="form-label" for="image">Imagen</label>
@@ -42,7 +45,7 @@
             </div>
             <div class="mb-3">
               <label class="form-label" for="about">Descripción</label>
-              <input name="descripcion" type="text" class="form-control" id="about"/>
+              <textarea name="descripcion" type="text" class="form-control" id="about" rows="3"></textarea>
             </div>
             <div class="mb-3">
               <label class="form-label" for="image">Imagen</label>

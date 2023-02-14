@@ -7,21 +7,7 @@ from .forms import *
 import os
 from biblioteca.settings import MEDIA_ROOT
 from django.core.paginator import Paginator
-# Create your views here.
 
-
-# def inicio(request):
-#     #return HttpResponse("<h1>Bienvenido a la libreria</h1>")
-#     return render(request, 'libreria/index.html')
-
-# def nosotros(request):
-#     return render(request, 'libreria/nosotros.html')
-
-# def libros(request):
-#     return render(request, 'libreria/libros.html')
-
-# def crear(request):
-#     return render(request, 'libreria/crear.html')
 
 class InicioView(ListView):
     template_name = 'libreria/index.html'
@@ -33,14 +19,10 @@ class InicioView(ListView):
 
 
 class NosotrosView(TemplateView):
-    template_name = 'libreria/nosotros.html'
-
-class LibrosView(TemplateView):
-    template_name = 'libreria/libros.html'
+    template_name = 'libreria/about.html'
 
 
-
-class eliminarView(DeleteView):
+class FormLibroDel(DeleteView):
     template_name = 'libreria/index.html'
 
     model = Libro
@@ -49,10 +31,19 @@ class eliminarView(DeleteView):
 
     success_url = reverse_lazy('inicio')
 
+    def get_initial(self):
+        initial = super().get_initial()
+        imagen = self.object.imagen
+        try:
+            os.remove(os.path.join(MEDIA_ROOT, imagen.name))
+        except:
+            pass
+        return initial
 
 
 
-class subCategoriaNew(CreateView):
+
+class FormLibroNew(CreateView):
     template_name = 'libreria/form.html'
 
     model = Libro
@@ -65,7 +56,7 @@ class subCategoriaNew(CreateView):
 
     
 
-class subCategoriaEdit(UpdateView):
+class FormLibroEdit(UpdateView):
     template_name = 'libreria/form.html'
 
     model = Libro

@@ -14,7 +14,6 @@
                        cellspacing="0">
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Titulo</th>
                             <th>Imagen</th>
                             <th>Descripcion</th>
@@ -25,7 +24,6 @@
                         {% for libro in page_obj %}
                             {% csrf_token %}
                             <tr>
-                                <td>{{ libro.id }}</td>
                                 <td>{{ libro.titulo }}</td>
                                 <td>
                                     <img src="{% static 'media/' %}{{ libro.imagen }}" alt="" width="100px">
@@ -34,9 +32,10 @@
                                 <td>
                                     <button class="btn btn-primary"
                                             onclick="return openModal('{% url 'edit' libro.id %}')">Editar</button>
-                                    {% comment %} <button class="btn btn-danger" onclick="deleteBook('{{ libro.id }}' , '{% url 'delete' %}', '{{ csrf_token }}')">
-                                        Eliminar
-                                    </button> {% endcomment %}
+                                    <form action="{% url 'delete' libro.id %}" class="d-inline" method="post">
+                                        {% csrf_token %}
+                                        <button class="btn btn-danger" type="submit">Eliminar</button>
+                                    </form>
                                     {% comment %} <a class="btn btn-danger" href='{% url 'delete' libro.id %}'>Eliminar</a> {% endcomment %}
                                 </td>
                             </tr>
@@ -60,7 +59,9 @@
                     {% endfor %}
                     {% if page_obj.has_next %}
                         <li class="page-item">
-                            <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Next">
+                            <a class="page-link"
+                               href="?page={{ page_obj.paginator.num_pages }}"
+                               aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>
@@ -72,6 +73,6 @@
     </div>
     <!-- Button trigger modal -->
     <button type="button"
-            class="btn btn-primary"
+            class="btn btn-primary mt-3"
             onclick="return openModal('{% url 'new' %}')">Agregar</button>
 {% endblock content %}
