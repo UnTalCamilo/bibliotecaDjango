@@ -1,12 +1,12 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import TemplateView, ListView, CreateView, UpdateView
 from django.views.generic.edit import FormView
+from django.contrib.auth import authenticate, login, logout
+
 from .forms import *
 import os
-from biblioteca.settings import MEDIA_ROOT
-from django.core.paginator import Paginator
 
 
 class InicioView(ListView):
@@ -22,25 +22,18 @@ class NosotrosView(TemplateView):
     template_name = 'libreria/about.html'
 
 
-class FormLibroDel(DeleteView):
-    template_name = 'libreria/index.html'
-
-    model = Libro
-
-    context_object_name = 'libro'
-
-    success_url = reverse_lazy('inicio')
-
-    def get_initial(self):
-        initial = super().get_initial()
-        imagen = self.object.imagen
-        try:
-            os.remove(os.path.join(MEDIA_ROOT, imagen.name))
-        except:
-            pass
-        return initial
+def deleteBook(request, pk):
+    libro = Libro.objects.get(id=pk)
+    try:
+        img_path = libro.imagen.path
+        os.remove(img_path)
+    except Exception as e:
+        print("No se pudo eliminar la imagen", e)
+    libro.delete()
+    return redirect('inicio')
 
 
+ 
 
 
 class FormLibroNew(CreateView):
@@ -56,6 +49,10 @@ class FormLibroNew(CreateView):
 
     
 
+    
+
+    
+
 class FormLibroEdit(UpdateView):
     template_name = 'libreria/form.html'
 
@@ -67,5 +64,6 @@ class FormLibroEdit(UpdateView):
 
     success_url = reverse_lazy('inicio')
 
-
-
+def loginOut(request):
+    logout(request)
+    return redirect('inicio')

@@ -13,7 +13,7 @@
                    class="form-control"
                    id="title"
                    name="titulo"
-                   value="{{ libro.titulo }}"/>
+                   value="{{ libro.titulo }}" />
           </div>
           <div class="mb-3">
             <label class="form-label" for="about">Descripción</label>
@@ -56,8 +56,6 @@
             </div>
           {% endif %}
           {% csrf_token %}
-          {{ form.errors }}
-          {{ form.non_field_errors }}
           <!-- /.panel-heading -->
           <div class="panel-body">
             {% csrf_token %}

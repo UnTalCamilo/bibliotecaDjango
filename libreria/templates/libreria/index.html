@@ -1,4 +1,4 @@
-{% extends 'libreria/base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 {% block title %}
     Libros
@@ -32,11 +32,8 @@
                                 <td>
                                     <button class="btn btn-primary"
                                             onclick="return openModal('{% url 'edit' libro.id %}')">Editar</button>
-                                    <form action="{% url 'delete' libro.id %}" class="d-inline" method="post">
-                                        {% csrf_token %}
-                                        <button class="btn btn-danger" type="submit">Eliminar</button>
-                                    </form>
-                                    {% comment %} <a class="btn btn-danger" href='{% url 'delete' libro.id %}'>Eliminar</a> {% endcomment %}
+                                    
+                                    <a class="btn btn-danger" href='{% url 'delete' libro.id %}' role="button">Eliminar</a>
                                 </td>
                             </tr>
                         {% endfor %}
