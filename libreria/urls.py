@@ -10,6 +10,7 @@ urlpatterns = [
     #path('delete/',  views.InicioView.delete, name='delete'),
     path('delete/<int:pk>/', login_required(views.deleteBook), name='delete'),
     path('new/', login_required(views.FormLibroNew.as_view()), name='new'),
-    path('edit/<int:pk>/', login_required(views.FormLibroEdit.as_view()), name='edit')
+    path('edit/<int:pk>/', login_required(views.FormLibroEdit.as_view()), name='edit'),
+    path('accounts/logout/', views.CustomLogOutView.as_view(), name='logout'),
 ]
 

@@ -1,9 +1,10 @@
+from pyexpat.errors import messages
+from telnetlib import LOGOUT
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView, CreateView, UpdateView
+from django.contrib.auth.views import LoginView, LogoutView
 from biblioteca.settings import MEDIA_ROOT
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
 from .forms import *
 import os
 
@@ -56,5 +57,6 @@ class FormLibroEdit(UpdateView):
 
     success_url = reverse_lazy('inicio')
 
-
-
+class CustomLogOutView(LogoutView):
+    
+    template_name = 'registration/logout.html'

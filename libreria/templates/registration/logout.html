@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container">
+        <h3>You're session has expired. Please log in again.</h3>
+        <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
+    </div>
+{% endblock content %}
