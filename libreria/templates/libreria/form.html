@@ -13,7 +13,8 @@
                    class="form-control"
                    id="title"
                    name="titulo"
-                   value="{{ libro.titulo }}"/>
+                   value="{{ libro.titulo }}"
+                   required/>
           </div>
           <div class="mb-3">
             <label class="form-label" for="about">Descripción</label>
@@ -41,7 +42,7 @@
                 enctype="multipart/form-data">
             <div class="mb-3">
               <label class="form-label" for="title">Titulo</label>
-              <input type="text" class="form-control" id="title" name="titulo"/>
+              <input type="text" class="form-control" id="title" name="titulo" required/>
             </div>
             <div class="mb-3">
               <label class="form-label" for="about">Descripción</label>
